@@ -1,0 +1,6 @@
+Le lien suivant propose la méthodologie suivante : http://answers.opencv.org/question/118850/best-method-to-recognize-currency-notes/
+   
+    find contours, check for rectangles in appropriate size
+    crop and align to xy axes
+    use machine learning on cropped images to classify
+
