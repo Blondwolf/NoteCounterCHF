@@ -4,3 +4,6 @@ Le lien suivant propose la méthodologie suivante : http://answers.opencv.org/que
     crop and align to xy axes
     use machine learning on cropped images to classify
 
+Currency euro recognition
+https://github.com/carlosmccosta/Currency-Recognition
+
