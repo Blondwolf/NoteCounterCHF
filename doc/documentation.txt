@@ -7,3 +7,9 @@ Le lien suivant propose la méthodologie suivante : http://answers.opencv.org/que
 Currency euro recognition
 https://github.com/carlosmccosta/Currency-Recognition
 
+//Good tutoriel in how to separate by color with openCV
+https://www.pyimagesearch.com/2014/08/04/opencv-python-color-detection/
+
+//Histogramme to collect color range
+https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_calculation/histogram_calculation.html
+
