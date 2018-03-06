@@ -22,7 +22,7 @@ def main():
     print("Hello noteCounter")
 
     print(cv2.__version__)
-    img = cv2.imread('img/20f.jpg')
+    img = cv2.imread('img/10f.jpg')
 
     cv2.imshow("Image Originale", img)
     cv2.waitKey(0)
@@ -34,11 +34,13 @@ def main():
 
 #https://www.pyimagesearch.com/2014/08/04/opencv-python-color-detection/
 def colorDetection(image):
-    # define the list of color range TODO choose wisely
+    # define the list of color range (bgr) TODO choose wisely
     colorBoundaries = [
-        ([17, 15, 100], [50, 56, 200]),     #Blue
-        ([86, 31, 4], [220, 88, 50]),       #Red
-        ([25, 146, 190], [62, 174, 250]),
+        ([50, 119, 200],[82, 147, 255]),    # YELLOW
+        ([37, 151, 199],[181, 213, 235]),   # YELLOW FULL
+        ([17, 15, 0], [50, 56, 255]),       # RED
+        # ([0, 0, 0], [100, 100, 255]),     # RED FULL
+        ([86, 31, 4], [220, 88, 50]),
         ([103, 86, 65], [145, 133, 128])
     ]
 
@@ -52,6 +54,14 @@ def colorDetection(image):
         # the mask
         mask = cv2.inRange(image, lower, upper)
         output = cv2.bitwise_and(image, image, mask=mask)
+
+        # Count no-black points
+        gray_image = cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
+        print("Non black point count :" + str(cv2.countNonZero(gray_image)))
+
+        # What is that
+        #kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        #cv2.erode(mask, kernel, mask)
 
         # show the images
         cv2.imshow("images", np.hstack([image, output]))
