@@ -1,6 +1,6 @@
 __author__ = 'Lovis Thomas, Vulliemin Kevin'
 # -*- coding: utf-8 -*-
-#!/usr/bin/env python
+# !/usr/bin/env python
 
 """
  * Cours :              Traitement d'images
@@ -16,26 +16,13 @@ __author__ = 'Lovis Thomas, Vulliemin Kevin'
 import sys
 import cv2
 import numpy as np
+from banknote import BankNote
 
 
-def main():
-    print("Hello noteCounter")
-
-    print(cv2.__version__)
-    img = cv2.imread('img/10f.jpg')
-
-    cv2.imshow("Image Originale", img)
-    cv2.waitKey(0)
-
-    colorOutput = colorDetection(img)
-
-    cv2.imshow("Detection de couleur", colorOutput)
-    cv2.waitKey(0)
-
-#https://www.pyimagesearch.com/2014/08/04/opencv-python-color-detection/
-def colorDetection(image):
+# https://www.pyimagesearch.com/2014/08/04/opencv-python-color-detection/
+def color_detection(image):
     # define the list of color range (bgr) TODO choose wisely
-    colorBoundaries = [
+    color_boundaries = [
         ([50, 119, 200],[82, 147, 255]),    # YELLOW
         ([37, 151, 199],[181, 213, 235]),   # YELLOW FULL
         ([17, 15, 0], [50, 56, 255]),       # RED
@@ -45,7 +32,7 @@ def colorDetection(image):
     ]
 
     # loop over the boundaries
-    for (lower, upper) in colorBoundaries:
+    for (lower, upper) in color_boundaries:
         # create NumPy arrays from the boundaries
         lower = np.array(lower, dtype="uint8")
         upper = np.array(upper, dtype="uint8")
@@ -68,5 +55,20 @@ def colorDetection(image):
         cv2.waitKey(0)
 
 
-if __name__ == "__main__":
+def main():
+    print("Hello noteCounter")
+
+    print(cv2.__version__)
+    img = cv2.imread('img/10f.jpg')
+
+    cv2.imshow("Image Originale", img)
+    cv2.waitKey(0)
+
+    color_output = color_detection(img)
+
+    cv2.imshow("Detection de couleur", color_output)
+    cv2.waitKey(0)
+
+
+if __name__ == '__main__':
     main()
