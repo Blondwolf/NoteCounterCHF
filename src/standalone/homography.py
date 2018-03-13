@@ -122,7 +122,7 @@ if __name__ == '__main__':
     for color, note in note_colors.items():
         for image_note_path in note.sides:
             current_note = note
-            compute_homography(image_path, image_note_path, callback_founded, debug=True)
+            compute_homography(image_path, image_note_path, callback_founded, debug=False)
 
     #TODO show note count
     print("The image show a sum of : " + str(sum(note.value for note in notes_list)))
