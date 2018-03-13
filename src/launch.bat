@@ -23,6 +23,6 @@ if exist "venv" (
 )
 
 echo ------- Lauch NoteCounter -------
-python note_analyser.py
+python init.py
 
 pause

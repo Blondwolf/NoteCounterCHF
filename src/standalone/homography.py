@@ -3,9 +3,8 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
-import copy
 
-from banknote import *
+from .banknote import *
 
 MIN_MATCH_COUNT = 40 # 40
 
@@ -106,8 +105,6 @@ if(w > 1000):
 def callback_founded(points):
     global image_final
 
-    #if(image_final)
-
     # Draw Contour on image
     image_final = cv2.polylines(image_final, points, True, 255, 3, cv2.LINE_AA)  # Contour
     cv2.imshow("Homography", image_final)
@@ -124,7 +121,7 @@ if __name__ == '__main__':
             current_note = note
             compute_homography(image_path, image_note_path, callback_founded, debug=False)
 
-    #TODO show note count
+    # Show note count
     print("The image show a sum of : " + str(sum(note.value for note in notes_list)))
 
     cv2.waitKey(0)

@@ -1,6 +1,7 @@
-__author__ = 'Lovis Thomas, Vulliemin Kevin'
 # -*- coding: utf-8 -*-
 # !/usr/bin/env python
+
+__author__ = 'Lovis Thomas, Vulliemin Kevin'
 
 """
  * Cours :              Traitement d'images
@@ -14,13 +15,14 @@ __author__ = 'Lovis Thomas, Vulliemin Kevin'
 """
 
 import cv2
-from note_counter import NoteCounter
+from .note_counter import NoteCounter, methods
 
 note_counter = NoteCounter(debug=True)
-image_readed = 0
+
 
 def read_image(path, method="SIMPLE_COLOR"):
     global image_readed
+    print("--------------------")
     print("->Method used: "+ method)
 
     notes, image = note_counter.read_image(path, method)
@@ -28,10 +30,7 @@ def read_image(path, method="SIMPLE_COLOR"):
     total = sum(int(note.value) for note in notes)
     print("-> The image show a sum of " + str(total) + " !")
 
-    #image = cv2.resize(image, (265, 470))
-    cv2.imshow(str(image_readed), image)
-
-    image_readed = image_readed + 1
+    cv2.imshow(path, image)
 
 
 def main():
@@ -39,29 +38,33 @@ def main():
     print("Python version : "+cv2.__version__)
     print("--------------------")
 
-    # V1
-    read_image('img/10f.jpg', "SIMPLE_COLOR")
-    #read_image('img/10b.jpg')  # SIMPLE_COLOR
-    #read_image('img/20f.jpg')
-    #read_image('img/20b.jpg')
-    #read_image('img/50f.jpg')
-    #read_image('img/50b.jpg')
+    user_entry = None
+    while user_entry is None:
+        user_entry = input("Please indicate path of an image on wich you want to count notes ('v' to use your video camera, 'q' to quit): ")
 
-    #img_reader.show_images()
+        if user_entry is 'q':
+            break
+        elif user_entry is 'v':
+            print("You selected video camera analysis but it's not implemented yet.")
+        else:
+            user_entry2 = None
+            while type(user_entry2) is not int:
+                for i in range(len(methods)):
+                    print(str(i)+": "+methods[i])
+                user_entry2 = input("Select between methods above: ")
 
-    # V2
-    #read_image('img/10f.jpg', "CONTOUR_AND_COLOR")
+                try:
+                    user_entry2 = int(user_entry2)
+                    method = methods[user_entry2]
+                except ValueError:
+                    print("Please enter a number!")
+                except IndexError:
+                    print("Please enter a proposed number!")
 
-    # V3
-    #read_image('img/20m.jpg', "PATTERN_MATCHING")
-
-    # V4
-    # Homography
-
-    # V5
-    # Tracking
+            read_image(image_path=user_entry, method_pos=user_entry2)
 
     cv2.waitKey(0)
+    print("End of program")
 
 
 if __name__ == '__main__':
