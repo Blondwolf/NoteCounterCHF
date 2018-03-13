@@ -15,22 +15,22 @@ __author__ = 'Lovis Thomas, Vulliemin Kevin'
 """
 
 import cv2
-from .note_counter import NoteCounter, methods
+from note_counter import NoteCounter, methods
 
 note_counter = NoteCounter(debug=True)
 
 
-def read_image(path, method="SIMPLE_COLOR"):
+def read_image(image_path, method="SIMPLE_COLOR"):
     global image_readed
     print("--------------------")
     print("->Method used: "+ method)
 
-    notes, image = note_counter.read_image(path, method)
+    notes, image = note_counter.read_image(image_path, method)
 
     total = sum(int(note.value) for note in notes)
     print("-> The image show a sum of " + str(total) + " !")
 
-    cv2.imshow(path, image)
+    cv2.imshow(image_path, image)
 
 
 def main():
@@ -61,7 +61,7 @@ def main():
                 except IndexError:
                     print("Please enter a proposed number!")
 
-            read_image(image_path=user_entry, method_pos=user_entry2)
+            read_image(image_path=user_entry, method=method)
 
     cv2.waitKey(0)
     print("End of program")

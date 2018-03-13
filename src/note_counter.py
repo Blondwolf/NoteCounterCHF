@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 # Internal import
-from .libraries.color_detection import *
-from .libraries.contour_detection import *
-from .libraries.pattern_detection import *
-from .libraries.homography_detection import *
+from libraries.color_detection import *
+from libraries.contour_detection import *
+from libraries.pattern_detection import *
+from libraries.homography_detection import *
 
 methods = ["SIMPLE_COLOR", "COLOR_AND_CONTOUR", "PATTERN_MATCHING", "HOMOGRAPHY"]
 
@@ -16,9 +16,9 @@ class NoteCounter(object):
         self.models = NOTES
         self.debug = debug
 
-    def read_image(self, image_path, method_pos=0):
+    def read_image(self, image_path, method="SIMPLE_COLOR"):
         original_image = cv2.imread(image_path)
-        detection_method = methods[method_pos]
+        detection_method = method
         list_notes = []
 
         if detection_method is "SIMPLE_COLOR":
