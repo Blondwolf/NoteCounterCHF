@@ -6,11 +6,15 @@ from .banknote import *
 
 MIN_MATCH_COUNT = 40
 FLANN_INDEX_KDTREE = 0
+
 index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
 search_params = dict(checks=50)
 
 sift = cv2.xfeatures2d.SIFT_create()
 flann = cv2.FlannBasedMatcher(index_params, search_params)
+
+des1 = None
+des2 = None
 
 def find_match(img1, kp1, des1, img2, debug=False):
     points = None
@@ -56,5 +60,52 @@ def find_match(img1, kp1, des1, img2, debug=False):
     return points
 
 
-def homography(self, image):
-    pass
+def compute_homography(image, template_path, callback, current_note, list_notes, debug=False):
+    points_list = []
+    #img_final = cv2.imread(image_path, 1)
+    img_final = image                     # Displayed image
+
+    img1 = cv2.imread(template_path, 0)   # Matching templates
+    img2 = img_final.copy()               # Image to compute
+
+    # find the keypoints and descriptors with SIFT
+    kp1, des1 = sift.detectAndCompute(img1, None)
+
+    ended = False
+
+    while not ended:
+        points = find_match(img1, kp1, des1, img2, debug)
+
+        if points is not None:
+            points_list.append(points)              # Memorise points for other external usages
+            img2 = cv2.fillPoly(img2, points, 255)  # Fill to mask and compute next search with same template
+            callback(points, current_note, list_notes, img_final)                        # Main callback to notify found and return points
+
+        else:
+            ended = True
+
+    return points_list #img_final
+
+# Fouded callback from homography
+def callback_founded(points, current_note, list_notes, image_final):
+    # Draw Contour on image
+    image_final = cv2.polylines(image_final, points, True, 255, 3, cv2.LINE_AA)  # Contour
+    cv2.imshow("Homography", image_final)
+    cv2.waitKey(1)
+
+    # Note program
+    list_notes.append(current_note)
+    print("->Founded a " + str(current_note.value) + " note.")
+
+def homography(image):
+    list_notes = []
+
+    for color, note in NOTE_COLORS.items():
+        for image_note_path in note.sides:
+            current_note = note
+            compute_homography(image, image_note_path, callback_founded, current_note, list_notes, debug=False)
+
+    # Show note count
+    print("The image show a sum of : " + str(sum(note.value for note in list_notes)))
+
+    cv2.waitKey(0)

@@ -4,7 +4,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-from .banknote import *
+from banknote import *
 
 MIN_MATCH_COUNT = 40 # 40
 
@@ -100,6 +100,7 @@ image_final = cv2.imread(image_path)
 (h, w) = image_final.shape[:2]
 if(w > 1000):
     image_final = cv2.resize(image_final, (int(w/2), int(h/2)))
+
 
 # Fouded callback from homography
 def callback_founded(points):
