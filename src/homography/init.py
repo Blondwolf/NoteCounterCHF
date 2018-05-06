@@ -41,10 +41,17 @@ def main():
         debug = False
     else:
         debug = True
+		
+    user_input = input("Contrast value (0-255) (default=128) :  ")
+    contrast = 128
+    if isinstance(user_input, int):
+        contrast = int(user_input)
+    if contrast < 0 or contrast > 255:
+        contrast = 128
 
     image_path = "img/102050m.jpg"
 
-    read_image(image_path, NoteCounter(debug))
+    read_image(image_path, NoteCounter(debug, contrast))
 
     cv2.waitKey(0)
     print("End of program")

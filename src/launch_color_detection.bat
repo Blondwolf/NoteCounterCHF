@@ -6,13 +6,9 @@ if exist "venv" (
     call venv\Scripts\activate
 
 ) else (
-    echo ------- Install venv ---------
-
-    pip install virtualenv
-
     echo ------- Create venv ---------
 
-    virtualenv venv
+    python -m venv venv
     call venv\scripts\activate
 
     echo ------- Install requirements -------
