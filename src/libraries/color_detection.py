@@ -11,7 +11,7 @@ import cv2
 import numpy as np
 
 
-def simple_color_detection(image, colors, debug):
+def simple_color_detection(image, colors, debug=False):
     best_color = None       # Remember the color
     best_color_count = 0    # Count matching pixels
     processed_image = None
